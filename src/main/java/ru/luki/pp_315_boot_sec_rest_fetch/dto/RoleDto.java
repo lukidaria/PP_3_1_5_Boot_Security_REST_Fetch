@@ -1,15 +1,15 @@
-package ru.luki.pp_315_boot_sec_rest_fetch.DTO;
+package ru.luki.pp_315_boot_sec_rest_fetch.dto;
 
-public class RoleDTO {
+public class RoleDto {
 
     private Long id;
 
     private String name;
 
-    public RoleDTO() {
+    public RoleDto() {
     }
 
-    public RoleDTO(Long id, String name) {
+    public RoleDto(Long id, String name) {
         this.id = id;
         this.name = name;
     }

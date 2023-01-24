@@ -1,10 +1,10 @@
-package ru.luki.pp_315_boot_sec_rest_fetch.DTO;
+package ru.luki.pp_315_boot_sec_rest_fetch.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class UserDTO {
+public class UserDto {
 
     private Long id;
 
@@ -19,16 +19,16 @@ public class UserDTO {
     private String password;
 
     @JsonProperty("roles")
-    private List<RoleDTO> roleDTO;
+    private List<RoleDto> roleDTO;
 
 //    private String rolesAtString = roleDTO.stream().map(Object::toString)
 //            .map(s->s.substring(5))
 //            .collect(Collectors.joining());
 
-    public UserDTO() {
+    public UserDto() {
     }
 
-    public UserDTO(Long id, String firstName, String lastName, Integer age, String username, String password, List<RoleDTO> roleDTO) {
+    public UserDto(Long id, String firstName, String lastName, Integer age, String username, String password, List<RoleDto> roleDTO) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -38,7 +38,7 @@ public class UserDTO {
         this.roleDTO = roleDTO;
     }
 
-    public UserDTO(Long id, String firstName, String lastName, Integer age, String username, String password) {
+    public UserDto(Long id, String firstName, String lastName, Integer age, String username, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -95,11 +95,11 @@ public class UserDTO {
         this.password = password;
     }
 
-    public List<RoleDTO> getRoleDTO() {
+    public List<RoleDto> getRoleDTO() {
         return roleDTO;
     }
 
-    public void setRoleDTO(List<RoleDTO> roleDTO) {
+    public void setRoleDTO(List<RoleDto> roleDTO) {
         this.roleDTO = roleDTO;
     }
 }
