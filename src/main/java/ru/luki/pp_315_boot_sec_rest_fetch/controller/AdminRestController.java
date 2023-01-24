@@ -9,13 +9,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.luki.pp_315_boot_sec_rest_fetch.DTO.RoleDTO;
-import ru.luki.pp_315_boot_sec_rest_fetch.DTO.UserDTO;
+import ru.luki.pp_315_boot_sec_rest_fetch.dto.RoleDto;
+import ru.luki.pp_315_boot_sec_rest_fetch.dto.UserDto;
 import ru.luki.pp_315_boot_sec_rest_fetch.configs.MapperUtil;
 import ru.luki.pp_315_boot_sec_rest_fetch.exceptions.NoSuchUserException;
 import ru.luki.pp_315_boot_sec_rest_fetch.model.Role;
 import ru.luki.pp_315_boot_sec_rest_fetch.model.User;
 import ru.luki.pp_315_boot_sec_rest_fetch.service.UserService;
+import ru.luki.pp_315_boot_sec_rest_fetch.service.UserServiceImpl;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,20 +41,20 @@ public class AdminRestController {
     }
 
 
-    public UserDTO convertToUserDto(User user) {
-        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+    public UserDto convertToUserDto(User user) {
+        UserDto userDTO = modelMapper.map(user, UserDto.class);
         userDTO.setRoleDTO(convertToRoleDto(user.getRoles()));
         return userDTO;
     }
 
-    public List<RoleDTO> convertToRoleDto(List<Role> roleList) {
+    public List<RoleDto> convertToRoleDto(List<Role> roleList) {
         return roleList.stream()
-                .map(r -> modelMapper.map(r, RoleDTO.class))
+                .map(r -> modelMapper.map(r, RoleDto.class))
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/admin")
-    public ResponseEntity<List<UserDTO>> showAllUsers(Model model) {
+    public ResponseEntity<List<UserDto>> showAllUsers(Model model) {
         List<User> userList = userService.allUsers();
         model.addAttribute("user", userList);
         model.addAttribute("allRoles", userService.allRoles());
@@ -71,7 +72,7 @@ public class AdminRestController {
 
 
     @GetMapping("/admin/{id}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
+    public ResponseEntity<UserDto> getUser(@PathVariable Long id) {
         User user = userService.findUserById(id);
         if (user == null) {
             throw new NoSuchUserException("There is no user with ID "
@@ -88,7 +89,7 @@ public class AdminRestController {
 
 
     @DeleteMapping("/admin/{id}")
-    public ResponseEntity<UserDTO> deleteUser(@PathVariable("id") Long id) {
+    public ResponseEntity<UserDto> deleteUser(@PathVariable("id") Long id) {
         User user = userService.findUserById(id);
         if (user == null) {
             throw new NoSuchUserException("There is no user " +
@@ -99,7 +100,7 @@ public class AdminRestController {
     }
 
     @PutMapping(value = "/admin")
-    public ResponseEntity<UserDTO> updateUser(@RequestBody User user) {
+    public ResponseEntity<UserDto> updateUser(@RequestBody User user) {
         userService.updateUser(user);
         return new ResponseEntity<>(convertToUserDto(user), HttpStatus.OK);
     }

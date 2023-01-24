@@ -4,23 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import ru.luki.pp_315_boot_sec_rest_fetch.model.User;
-import ru.luki.pp_315_boot_sec_rest_fetch.service.UserService;
+import ru.luki.pp_315_boot_sec_rest_fetch.service.UserServiceImpl;
 
 
 import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
 
 @Controller
 public class MainController {
 
-    final private UserService userService;
+    final private UserServiceImpl userServiceImpl;
 
     @Autowired
-    public MainController(UserService userService) {
-        this.userService = userService;
+    public MainController(UserServiceImpl userServiceImpl) {
+        this.userServiceImpl = userServiceImpl;
     }
 
     @GetMapping("/admin")

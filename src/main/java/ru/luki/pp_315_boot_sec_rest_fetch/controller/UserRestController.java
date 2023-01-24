@@ -8,11 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.luki.pp_315_boot_sec_rest_fetch.DTO.RoleDTO;
-import ru.luki.pp_315_boot_sec_rest_fetch.DTO.UserDTO;
+import ru.luki.pp_315_boot_sec_rest_fetch.dto.RoleDto;
+import ru.luki.pp_315_boot_sec_rest_fetch.dto.UserDto;
 import ru.luki.pp_315_boot_sec_rest_fetch.model.Role;
 import ru.luki.pp_315_boot_sec_rest_fetch.model.User;
 import ru.luki.pp_315_boot_sec_rest_fetch.service.UserService;
+import ru.luki.pp_315_boot_sec_rest_fetch.service.UserServiceImpl;
 
 import java.security.Principal;
 import java.util.List;
@@ -35,22 +36,22 @@ public class UserRestController {
         this.modelMapper = modelMapper;
     }
 
-    public UserDTO convertToUserDto(User user) {
-        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+    public UserDto convertToUserDto(User user) {
+        UserDto userDTO = modelMapper.map(user, UserDto.class);
         userDTO.setRoleDTO(convertToRoleDto(user.getRoles()));
         return userDTO;
     }
 
-    public List<RoleDTO> convertToRoleDto(List<Role> roleList) {
+    public List<RoleDto> convertToRoleDto(List<Role> roleList) {
         return roleList.stream()
-                .map(r -> modelMapper.map(r, RoleDTO.class))
+                .map(r -> modelMapper.map(r, RoleDto.class))
                 .collect(Collectors.toList());
     }
 
     @GetMapping(value = "/user")
-    public ResponseEntity<UserDTO> getUser(Principal principal) {
+    public ResponseEntity<UserDto> getUser(Principal principal) {
         User user = userService.findByUsername(principal.getName());
-        UserDTO userDTO = convertToUserDto(user);
+        UserDto userDTO = convertToUserDto(user);
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 

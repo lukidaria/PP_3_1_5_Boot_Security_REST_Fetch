@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.luki.pp_315_boot_sec_rest_fetch.service.UserService;
+import ru.luki.pp_315_boot_sec_rest_fetch.service.UserServiceImpl;
 
 
 @Configuration
@@ -39,7 +40,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-//                .antMatchers("/admin/**", "/user/**").permitAll()
                 //Доступ только для пользователей с ролью Администратор
                 .antMatchers("/admin/**", "/api/**", "/js/**").hasRole("ADMIN")
                 //Доступ только для пользователей с ролью User
